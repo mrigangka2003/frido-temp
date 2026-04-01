@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
 import type { Mode, Product } from "./api/products";
-import { fetchProducts, coupleCategories, singleCategories } from "./api/products";
+import { coupleCategories, singleCategories } from "./api/products";
 import Navbar from "./components/Navbar";
 import HeroBanner from "./components/HeroBanner";
 import CategoryTabs from "./components/CategoryTabs";
 import ProductGrid from "./components/ProductGrid";
 import MidBanner from "./components/MidBanner";
+import { fetchShopifyProducts } from "./api/shopify";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<Mode>("couple");
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(true);
   const isCouple = mode === "couple";
 
   useEffect(() => {
-    fetchProducts().then(setProducts);
-  }, []);
+    let cancelled = false;
+    const load = async () => {
+      setLoading(true);
+      const data = await fetchShopifyProducts(mode);
+      if (!cancelled) {
+        setProducts(data);
+        setLoading(false);
+      }
+    };
+    void load();
+    return () => { cancelled = true; };
+  }, [mode]);
 
   const handleToggleMode = () => {
     setContentVisible(false);
@@ -24,6 +36,8 @@ const App: React.FC = () => {
       setContentVisible(true);
     }, 300);
   };
+
+  const displayProducts = loading ? [] : products;
 
   return (
     <div
@@ -75,29 +89,17 @@ const App: React.FC = () => {
             mode={mode}
             title={isCouple ? "So... what kind of Paglu is yours?" : "Pick Where You Need Pampering"}
           />
-          <ProductGrid products={products} mode={mode} />
+          {loading ? (
+            <div style={{ textAlign: "center", padding: "48px 0", color: "#aaa", fontSize: 14, fontFamily: "'DM Sans', sans-serif" }}>
+              Loading products…
+            </div>
+          ) : (
+            <ProductGrid products={displayProducts} mode={mode} />
+          )}
         </section>
 
         {/* Mid Banner */}
         <MidBanner mode={mode} />
-
-        {/* Section 2: Bottom product grid */}
-        <section>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontStyle: isCouple ? "italic" : "normal",
-              fontSize: "clamp(20px, 2vw, 28px)",
-              color: "#2c3e50",
-              textAlign: "center",
-              marginBottom: 32,
-              transition: "color 0.6s ease",
-            }}
-          >
-            {isCouple ? "Perfect Pairs for Perfect Comfort" : "Your Self-Care Essentials"}
-          </h2>
-          <ProductGrid products={[...products].reverse()} mode={mode} />
-        </section>
 
         {/* Footer spacer */}
         <div style={{ height: 64 }} />

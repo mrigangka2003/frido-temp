@@ -55,24 +55,38 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
           transition: "background 0.6s ease",
         }}
       >
-        {/* Stylized product visual */}
-        <div
-          style={{
-            width: 100,
-            height: 120,
-            borderRadius: 12,
-            background: `linear-gradient(135deg, ${product.imageColor}dd, ${product.imageColor}88)`,
-            boxShadow: `0 8px 30px ${product.imageColor}55`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#fff",
-            transform: hovered ? "scale(1.06) rotate(-2deg)" : "scale(1) rotate(0deg)",
-            transition: "transform 0.3s ease",
-          }}
-        >
-          <Footprints size={48} strokeWidth={1.5} />
-        </div>
+        {/* Product visual: real image or stylised placeholder */}
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: hovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.3s ease",
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              width: 100,
+              height: 120,
+              borderRadius: 12,
+              background: `linear-gradient(135deg, ${product.imageColor}dd, ${product.imageColor}88)`,
+              boxShadow: `0 8px 30px ${product.imageColor}55`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              transform: hovered ? "scale(1.06) rotate(-2deg)" : "scale(1) rotate(0deg)",
+              transition: "transform 0.3s ease",
+            }}
+          >
+            <Footprints size={48} strokeWidth={1.5} />
+          </div>
+        )}
 
         {/* Rating */}
         <div
