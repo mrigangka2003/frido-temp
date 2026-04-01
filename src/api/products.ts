@@ -17,6 +17,7 @@ export type Product = {
   rating: number;
   reviews: number;
   imageColor: string; // used to render a stylized placeholder
+  imageUrl?: string;
 };
 
 export const coupleCategories: Category[] = [
