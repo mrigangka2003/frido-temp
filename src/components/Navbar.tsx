@@ -1,22 +1,21 @@
 import React from "react";
 import type { Mode } from "../api/products";
+import { Menu, User, Search, ShoppingBag } from "lucide-react";
 
 interface NavbarProps {
   mode: Mode;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ mode }) => {
-  const isCouple = mode === "couple";
-
+const Navbar: React.FC<NavbarProps> = () => {
   return (
     <nav
       style={{
         position: "sticky",
         top: 0,
         zIndex: 100,
-        background: isCouple ? "rgba(255,255,255,0.97)" : "rgba(10,10,10,0.97)",
+        background: "rgba(252, 250, 248, 0.97)",
         backdropFilter: "blur(12px)",
-        borderBottom: isCouple ? "1px solid #f0e4e4" : "1px solid #1e1e1e",
+        borderBottom: "1px solid #eaeaea",
         padding: "0 48px",
         height: 64,
         display: "flex",
@@ -27,8 +26,8 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
     >
       {/* Left icons */}
       <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-        <NavIcon mode={mode}>☰</NavIcon>
-        <NavIcon mode={mode}>👤</NavIcon>
+        <NavIcon><Menu size={20} strokeWidth={1.5} /></NavIcon>
+        <NavIcon><User size={20} strokeWidth={1.5} /></NavIcon>
       </div>
 
       {/* Logo */}
@@ -38,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
           fontSize: 28,
           fontWeight: 700,
           letterSpacing: "0.08em",
-          color: isCouple ? "#1a1a1a" : "#f5f5f5",
+          color: "#1a1a1a",
           transition: "color 0.6s ease",
         }}
       >
@@ -47,24 +46,31 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
 
       {/* Right icons */}
       <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-        <NavIcon mode={mode}>🔍</NavIcon>
-        <NavIcon mode={mode}>🛍</NavIcon>
+        <NavIcon><Search size={20} strokeWidth={1.5} /></NavIcon>
+        <NavIcon><ShoppingBag size={20} strokeWidth={1.5} /></NavIcon>
       </div>
     </nav>
   );
 };
 
-const NavIcon: React.FC<{ mode: Mode; children: React.ReactNode }> = ({
-  mode,
-  children,
-}) => (
+const NavIcon: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <span
     style={{
-      fontSize: 18,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       cursor: "pointer",
       opacity: 0.7,
-      transition: "opacity 0.2s",
-      filter: mode === "single" ? "brightness(2)" : "none",
+      color: "#1a1a1a",
+      transition: "opacity 0.2s, transform 0.2s",
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.opacity = "1";
+      e.currentTarget.style.transform = "scale(1.1)";
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.opacity = "0.7";
+      e.currentTarget.style.transform = "scale(1)";
     }}
   >
     {children}

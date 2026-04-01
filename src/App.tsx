@@ -29,7 +29,7 @@ const App: React.FC = () => {
     <div
       style={{
         minHeight: "100vh",
-        background: isCouple ? "#fdf6f6" : "#0d0d0d",
+        background: "#faf8f5",
         transition: "background 0.8s ease",
         fontFamily: "'DM Sans', sans-serif",
       }}
@@ -51,7 +51,7 @@ const App: React.FC = () => {
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: ${isCouple ? "#e2b0b0" : "#333"}; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #dcd0c0; border-radius: 3px; }
       `}</style>
 
       <Navbar mode={mode} />
@@ -88,7 +88,7 @@ const App: React.FC = () => {
               fontFamily: "'Playfair Display', serif",
               fontStyle: isCouple ? "italic" : "normal",
               fontSize: "clamp(20px, 2vw, 28px)",
-              color: isCouple ? "#c0392b" : "#f5f5f5",
+              color: "#2c3e50",
               textAlign: "center",
               marginBottom: 32,
               transition: "color 0.6s ease",
@@ -106,11 +106,11 @@ const App: React.FC = () => {
         <footer
           style={{
             textAlign: "center",
-            borderTop: `1px solid ${isCouple ? "#f0e0e0" : "#222"}`,
+            borderTop: "1px solid #eaeaea",
             paddingTop: 32,
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 13,
-            color: isCouple ? "#bbb" : "#555",
+            color: "#888",
             letterSpacing: "0.04em",
             transition: "color 0.6s ease, border-color 0.6s ease",
           }}
@@ -120,7 +120,7 @@ const App: React.FC = () => {
               fontFamily: "'Playfair Display', serif",
               fontSize: 22,
               fontWeight: 700,
-              color: isCouple ? "#c0392b" : "#E74C3C",
+              color: "#c0392b",
               marginBottom: 8,
             }}
           >

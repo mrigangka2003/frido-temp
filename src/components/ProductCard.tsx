@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Product, Mode } from "../api/products";
+import { Footprints, Star } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -17,24 +18,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
     setTimeout(() => setAdded(false), 1500);
   };
 
+  const imageBackground = isCouple
+    ? "linear-gradient(135deg, #fdf2f2 0%, #fce4e4 100%)"
+    : "linear-gradient(135deg, #fdf8f4 0%, #f7ebe1 100%)";
+
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: isCouple ? "#fff" : "#111",
+        background: "#fff",
         borderRadius: 20,
         overflow: "hidden",
-        border: `1px solid ${isCouple ? "#f0e4e4" : "#222"}`,
+        border: "1px solid #eaeaea",
         transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
         transform: hovered ? "translateY(-6px)" : "translateY(0)",
         boxShadow: hovered
           ? isCouple
-            ? "0 16px 40px rgba(192,57,43,0.18)"
-            : "0 16px 40px rgba(0,0,0,0.5)"
-          : isCouple
-          ? "0 4px 16px rgba(0,0,0,0.08)"
-          : "0 4px 16px rgba(0,0,0,0.3)",
+            ? "0 16px 40px rgba(192,57,43,0.12)"
+            : "0 16px 40px rgba(230,126,34,0.12)"
+          : "0 4px 16px rgba(0,0,0,0.03)",
         animationDelay: `${delay}ms`,
         animation: "fadeInUp 0.5s ease both",
       }}
@@ -44,9 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
         style={{
           position: "relative",
           height: 180,
-          background: isCouple
-            ? `linear-gradient(135deg, #fdf2f2 0%, #fce4e4 100%)`
-            : `linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)`,
+          background: imageBackground,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -65,33 +66,34 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 32,
+            color: "#fff",
             transform: hovered ? "scale(1.06) rotate(-2deg)" : "scale(1) rotate(0deg)",
             transition: "transform 0.3s ease",
           }}
         >
-          🦶
+          <Footprints size={48} strokeWidth={1.5} />
         </div>
 
         {/* Rating */}
         <div
           style={{
             position: "absolute",
-            top: 10,
-            left: 10,
+            top: 12,
+            left: 12,
             display: "flex",
             alignItems: "center",
             gap: 4,
-            background: isCouple ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.7)",
+            background: "rgba(255,255,255,0.9)",
             borderRadius: 20,
             padding: "4px 10px",
             fontSize: 11,
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 600,
-            color: isCouple ? "#333" : "#eee",
+            color: "#333",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
           }}
         >
-          <span style={{ color: "#f39c12" }}>★</span>
+          <Star size={12} fill="#f39c12" color="#f39c12" />
           {product.rating} ({product.reviews}+)
         </div>
 
@@ -99,8 +101,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
         <div
           style={{
             position: "absolute",
-            top: 10,
-            right: 10,
+            top: 12,
+            right: 12,
             display: "flex",
             gap: 4,
           }}
@@ -113,7 +115,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
                 height: 10,
                 borderRadius: "50%",
                 background: c,
-                border: "1.5px solid rgba(255,255,255,0.6)",
+                border: "1.5px solid rgba(255,255,255,0.8)",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
               }}
             />
           ))}
@@ -125,9 +128,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 13,
-            fontWeight: 600,
-            color: isCouple ? "#1a1a1a" : "#e5e5e5",
+            fontSize: 14,
+            fontWeight: 700,
+            color: "#1a1a1a",
             marginBottom: 4,
             lineHeight: 1.4,
           }}
@@ -137,9 +140,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11,
-            color: isCouple ? "#999" : "#666",
-            marginBottom: 10,
+            fontSize: 12,
+            color: "#777",
+            marginBottom: 12,
           }}
         >
           {product.tagline}
@@ -149,11 +152,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
           <span
             style={{
-              background: isCouple ? "#fff0f0" : "#2a0a0a",
-              color: isCouple ? "#e74c3c" : "#ff6b6b",
-              border: `1px solid ${isCouple ? "#fcc" : "#5a1515"}`,
-              borderRadius: 4,
-              padding: "2px 7px",
+              background: isCouple ? "#fff0f0" : "#fbf0e6",
+              color: isCouple ? "#e74c3c" : "#d35400",
+              border: `1px solid ${isCouple ? "#fcc" : "#faceac"}`,
+              borderRadius: 6,
+              padding: "3px 8px",
               fontSize: 10,
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 700,
@@ -164,10 +167,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
           </span>
           <span
             style={{
-              background: isCouple ? "#e8f5e9" : "#0a1e0a",
+              background: "#e8f5e9",
               color: "#27ae60",
-              borderRadius: 4,
-              padding: "2px 7px",
+              borderRadius: 6,
+              padding: "4px 8px",
               fontSize: 10,
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 700,
@@ -177,12 +180,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
           </span>
         </div>
 
-        <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 16 }}>
           <span
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 11,
-              color: isCouple ? "#bbb" : "#555",
+              fontSize: 12,
+              color: "#999",
               textDecoration: "line-through",
             }}
           >
@@ -191,9 +194,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
           <span
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: 800,
-              color: isCouple ? "#1a1a1a" : "#f0f0f0",
+              color: "#1a1a1a",
             }}
           >
             ₹{product.salePrice}
@@ -211,8 +214,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
             background: added
               ? "#27ae60"
               : isCouple
-              ? "#FFD700"
-              : "#E74C3C",
+              ? "#FFE566"
+              : "#e67e22",
             color: added ? "#fff" : isCouple ? "#7b3a0a" : "#fff",
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 700,
@@ -221,6 +224,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, mode, delay = 0 }) =
             cursor: "pointer",
             transition: "background 0.3s ease, transform 0.15s ease",
             transform: hovered && !added ? "scale(1.02)" : "scale(1)",
+            boxShadow: hovered && !added
+              ? isCouple ? "0 4px 15px rgba(255,229,102,0.4)" : "0 4px 15px rgba(230,126,34,0.3)"
+              : "none",
           }}
         >
           {added ? "✓ Added!" : "Add To Cart"}
